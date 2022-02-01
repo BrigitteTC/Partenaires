@@ -1,0 +1,255 @@
+/*------------------------------------------------------
+Fichier SCSS:
+   Mixins
+
+Creation: 31/12/2021
+Auteur: BTC
+---------------------------------------------------------*/
+
+/*---------------------------------------------------------*/
+/* Mixin pour déclarer une boite flex
+Nom: M_flex_box
+Fonction: Déclarer une boite flex_box avec sesparamètres principaux
+Parametres:
+    $direction: row pour hirizontal et column pour vertical
+    $aligmenent: Organisation des items
+        /* Alignement « géométrique » */
+/* justify-content: center;     /* Éléments groupés au centre */
+/*  justify-content: start;      /* Éléments groupés au début */
+/*  justify-content: end;        /* Éléments groupés à la fin */
+/*  justify-content: flex-start; /* Éléments flexibles groupés au début */
+/*  justify-content: flex-end;   /* Éléments flexibles groupés à la fin */
+/*  justify-content: left;       /* Éléments groupés à gauche */
+/*  justify-content: right;      /* Éléments groupés à droite */
+
+/* Alignement par rapport à la ligne de base */
+/* justify-content ne prend pas de valeurs relatives à la ligne de base */
+
+/* Alignement normal */
+/*  justify-content: normal;
+
+        /* Alignement distribué */
+/* justify-content: space-between; /* Les éléments sont répartis équitablement
+                                        Le bord du premier est aligné sur le
+                                        début du conteneur et la fin du dernier
+                                        est alignée sur la fin du conteneur */
+/* justify-content: space-around;  /* Les éléments sont répartis équitablement
+                                        À chaque extrémité, entre le bord du
+                                        conteneur et le premier/dernier élément
+                                        on a la moitié de l'espace appliqué entre
+                                        chaque élément */
+/* justify-content: space-evenly;  /* Les éléments sont répartis équitablement
+                                        Tous les éléments sont séparés par le même
+                                        espace */
+/* justify-content: stretch;       /* Les éléments sont répartis équitablement et
+                                        les éléments dimensionnés avec 'auto' sont
+                                        étirés afin de remplir le conteneur */
+/*---------------------------------------------------------*/
+
+@mixin M_flex_box($direction, $alignement) {
+  display: flex;
+  flex-direction: $direction; /*row: Horizontal  column : vertical*/
+
+  justify-content: $alignement; /* Alignement voir desc params*/
+  box-sizing: border-box;
+}
+
+/*---------------------------------------------------------*/
+/* Mixin pour affichage du logo
+Nom: M_AffichageLogo
+Fonction: Affiche le logo "Ohmyfood" en tête de l'écran
+Parametres:
+    aucun
+
+/*---------------------------------------------------------*/
+
+@mixin M_AffichageLogo {
+  height: $HauteurOhmyfood; /*Hauteur forcée en pixels*/
+
+  padding: 20px 5%; /* Espace intérieur Haut/bas et Gauche/droite*/
+}
+
+/*------------------------------------------------------------
+Mixin pour coloriage su spinner
+Nom: M_ColorSpinner
+Paramètres: aucun
+/*------------------------------------------------------------*/
+
+@mixin M_ColorSpinner {
+  border: 10px solid $CouleurPrimaire;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid $CouleurTertiaire;
+  border-left: 10px solid $CouleurSecondaire;
+}
+
+/*---------------------------------------------------------*/
+/*---------------------------------------------------------*/
+/* Mixin pour affichage d'une ombre 
+Nom: M_AffichageOmbre
+Fonction: Affiche une ombre sur un elt
+Parametres:
+    aucun
+
+/*---------------------------------------------------------*/
+
+@mixin M_AffichageOmbre {
+  box-shadow: 5px 5px 10px $OmbreArticle; /* Décalage horizontal, décalage vertical, force du dégradé, couleur*/
+}
+
+/*---------------------------------------------------------*/
+/* Mixin pour affichage d'un bouton
+Nom: M_AffichageBouton
+Fonction: Affiche un bouton avec couleurs dégradées et bords arrondis
+Parametres:
+    Couleur du texte
+    Couleur fond haut
+    Couleur fond bas
+
+/*---------------------------------------------------------*/
+
+@mixin M_AffichageBouton($texte, $FondHaut, $FondBas) {
+}
+
+/*---------------------------------------------------------*/
+/* keyframes spinner
+Nom: K_spinner
+Fonction: Affiche un rond d'attenee
+Parametres:
+  aucun
+
+/*---------------------------------------------------------*/
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+.spin::before {
+  animation: 1.5s linear infinite spinner;
+  animation-play-state: inherit;
+  border: solid 5px #cfd0d1;
+  border-bottom-color: #1c87c9;
+  border-radius: 50%;
+  content: "";
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: transform;
+}
+
+/*---------------------------------------------------------*/
+/* Mixin pour remplissage objet par un gradient
+Nom: M_gradient-animation
+Fonction: Affiche un bouton avec couleurs dégradées et bords arrondis
+Parametres:
+    Couleur du texte
+    Couleur fond haut
+    Couleur fond bas
+
+/*---------------------------------------------------------*/
+
+@mixin gradient-animation_Over($start, $end, $transTime, $content) {
+  background-size: 100%;
+  background-image: linear-gradient($start, $end);
+  position: relative;
+  z-index: 100;
+
+  &:after {
+    background-image: linear-gradient($end, $start);
+    content: $content;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -100;
+    transition: opacity $transTime;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  &:hover {
+    &:after {
+      opacity: 1;
+    }
+  }
+}
+
+/*---------------------------------------------------------*/
+/* Mixin pour remplissage objet par un gradient
+Nom: M_gradient-animation
+Fonction: Affiche un bouton avec couleurs dégradées et bords arrondis
+Parametres:
+    Couleur du texte
+    Couleur fond haut
+    Couleur fond bas
+
+    Remarque: le &:after est indispensable pour fixer l'image..
+/*---------------------------------------------------------*/
+
+@mixin gradient-animation($start, $end, $transTime, $content) {
+  background-size: 100%;
+  background-image: linear-gradient($start, $end);
+  position: relative;
+  z-index: 100;
+
+  &:after {
+    background-image: linear-gradient($end, $start);
+    content: $content;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -100;
+    transition: opacity $transTime;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/*---------------------------------------------------------*/
+/* Mixin pour remplissage coeur au survol
+Nom: M_RemplissageCoeurSurvol
+Fonction: REmplit au coeur plein au survol
+Parametres:
+  Aucun
+
+  REmarque: Les 2 instructions webkit-background-clip sont indispensables 
+    Pour ne remplir que l'intérieur du coeur.
+/*---------------------------------------------------------*/
+
+@mixin M_RemplissageCoeurSurvol {
+  /*gradient pour colorer le coeur plein */
+  @include gradient-animation(
+    $CouleurPrimaire,
+    $CouleurSecondaire,
+    1s,
+    "\f230"
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/*---------------------------------------------------------*/
+/* Mixin pour Tronquer le texte
+Nom: M_Troncate
+Fonction: tronque le texte et affiche "..."
+Parametres:
+  Aucun
+
+  Attention: overflow: Hidden et pas text-overflow: hidden
+/*---------------------------------------------------------*/
+@mixin M_Troncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

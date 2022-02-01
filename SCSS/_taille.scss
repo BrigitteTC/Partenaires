@@ -1,0 +1,73 @@
+/*------------------------------------------------------
+Fichier SCSS:
+    Tailles et graisses
+
+Creation: 30/12/2021
+Auteur: BTC
+---------------------------------------------------------*/
+
+/* Balises sémantiques */
+h1 {
+  font-size: 20px;
+  font-weight: 800;
+}
+h2 {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+pre {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+h6 {
+  font-size: 2px; /* tout petit pour rester caché dans une section où il faut une balise h1/h6*/
+}
+
+p {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/*Marges*/
+$TailleEspaceStandard: 20px; /* Marge ou padding standard appliquée sur les elts*/
+
+/* Taille du passage de sortie du mode tel*/
+$TailleEcranDesktop: 900px;
+
+/* Taille des images, logos*/
+
+$HauteurOhmyfood: 50px; /* Hauteur du logo forcée en pixels*/
+
+/* champ de recherche*/
+
+$HauteurRecherche: 60px; /* Hauteur totale de la section de recherche*/
+$HauteurRechercheBordure: 5px; /* Hauteur bordure haute de la section de recherche*/
+$HauteurRechercheLogo: 40px; /* Hauteur bordure haute de la section de recherche*/
+$PositionRechercheLogoV: 10px; /* Potiion du logo / haut section*/
+
+/*Bouton*/
+$HauteurBouton: 50px; /* Hauteur des boutons*/
+
+/* Fonctionnement*/
+$HauteurFonctItem: 60px; /* Hauteur de chaque item de fonctionnement*/
+$PositionFonctElt: 20px; /*Position de chaqye elt par rapport au bord haut du container*/
+
+/*Restaurants*/
+$HauteurRestaurantItem: 200px; /* Smartphone: Hauteur item restaurat avec image + description*/
+$HauteurRestaurantItemD: 250px; /* Desktop: Hauteur item restaurat avec image + description*/
+$HauteurRestaurantImg: 130px; /* Hauteur des images des restaurants*/
+
+/* Menus*/
+$HauteurPlatDescr: 50px; /* Hauteur pour la descriptino du plat et son prix*/

@@ -1,0 +1,43 @@
+/*------------------------------------------------------
+Fichier SCSS:
+    Couleurs
+
+Creation: 30/12/2021
+Auteur: BTC
+---------------------------------------------------------*/
+
+/* Variables de couleur*/
+/*Les couleurs*/
+
+/* Couleurs imposées primaire/secondaire/tertiaire*/
+
+$CouleurPrimaire: #9356dc;
+$CouleurSecondaire: #ff79da;
+$CouleurTertiaire: #99e2d0;
+
+/* Couleurs des textes*/
+$CouleurTexte: black;
+$CouleurTextePopup: green;
+$CouleurTexteBouton: white;
+$CouleurTexteFooter: white;
+$CouleurNumFt: white; /* Numéro du fonctionnement*/
+
+/*Couleurs de fonds*/
+$CouleurFondItem3: rgb(245, 237, 255);
+
+$FondGris: #f2f2f2;
+$FondGrisFonce: rgb(234, 234, 234);
+$CouleurBordure: rgb(221, 221, 221);
+
+$CouleurFondRestaurants: $FondGris; /* Fond d'écran pour description restaurants*/
+$CouleurFondDescRestaurants: white; /* Fond d'écran pour description restaurants*/
+
+$CouleurOK: white; /* Fond du petit icone OK*/
+
+$CouleurFooter: black;
+
+$OmbreArticle: rgb(212, 208, 208); /* Couleur de l'ombre de l'article*/
+
+/*Couleur des liens*/
+$CouleurLienRepos: black; /* lien au repos*/
+$CouleurLienSurvol: black; /*Lien au survol*/

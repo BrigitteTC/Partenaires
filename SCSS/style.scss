@@ -1,0 +1,552 @@
+/*-------------------------------------------------
+Feuille de style en scss
+
+Creation: 30/12/2021
+Auteur: BTC
+
+---------------------------------------------------*/
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* Importation partiels*/
+@import "couleur";
+@import "taille";
+@import "general";
+@import "mixins";
+
+/*Infos générales body*/
+body {
+  font-family: "Roboto", sans-serif;
+
+  color: $CouleurTexte; /*Couleur du texte: noir*/
+
+  margin: 0; /* supprime la marge pour chrome*/
+}
+
+/* Classes générales*/
+/* Positionnne un petit icone*/
+.PositionLogo {
+  display: flex;
+}
+.Logo {
+  margin: auto; /*Permet de centrer un icone sur son container*/
+}
+
+/* Class pour cacher un texte*/
+.Transparent {
+  color: transparent;
+}
+
+/* Couleur des liens fixée*/
+a,
+a:link,
+a:visited,
+a:focus,
+a:hover,
+a:active {
+  color: $CouleurLienRepos;
+}
+/*---------------------------------------------------------------*/
+
+/* Gestion des coeurs*/
+.RestaurantCoeur {
+  /* Gestion des coeurs*/
+
+  display: flex; /* pour centrer le coeur*/
+  position: relative;
+
+  .CoeurPlein {
+    /* On positionne le coeur plein qui n'apparaitra qu'au survol*/
+    /* Le survol du coeur vide fera apparaitre le coeur plein*/
+
+    opacity: 0;
+  }
+
+  .CoeurVide {
+    /* On positionnne le coeur vide*/
+    position: absolute;
+
+    z-index: 2; /* Sera derriere le coeur plein au survol*/
+
+    &:hover {
+      opacity: 0; /* Le coeur vide disparait*/
+    }
+
+    &:hover + .CoeurPlein {
+      @include M_RemplissageCoeurSurvol;
+
+      opacity: 1; /* le coeur plein coloré apparait*/
+    }
+  }
+} /*Fin RestaurantCoeur*/
+
+/*-------------------------------------------------------
+Apparition de la page d'accueil après un spinner
+--------------------------------------------------------*/
+.PageAccueil {
+  @include M_flex_box(column, center); /* Elts en vertical et centrés*/
+  position: relative;
+
+  /* Le spinner en attendant le chargement*/
+  &__Chargement {
+    position: absolute; /* Fixe la position du petit rond qui va tourner*/
+
+    /* Taille*/
+    height: 50px;
+    width: 50px;
+
+    /* coloriage + mise en rond*/
+    @include M_ColorSpinner;
+    border-radius: $RadiusRond;
+
+    /* Position au milieu à 200px du haut*/
+    top: 200px;
+    left: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+    /*animation*/
+    animation: spin 3s 0s, Disparition 3s 0s both; /* rotation pendant 3s  puis disparition.  
+                                                    le both sert à avoir la même propriete à 0 et 100%*/
+  }
+
+  /* La page d'accueil*/
+  &__Accueil {
+    animation: Apparition 0ms 2000ms both; /* Apparition au bout de 2s de la page*/
+  }
+}
+
+/* Silence on tourne*/
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Apparition de la page d'accueil après un delay par translate*/
+@keyframes Apparition {
+  from {
+    transform: translateX(-9999px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Disparition du spiner après avoir tourné*/
+@keyframes Disparition {
+  100%,
+  0% {
+    border: 10px solid transparent; /* On le voit plus*/
+  }
+  5% {
+    @include M_ColorSpinner; /* On le voit*/
+  }
+
+  95% {
+    @include M_ColorSpinner; /* On le voit*/
+  }
+}
+
+/*--------------------------*/
+/*Header*/
+/*--------------------------*/
+
+header {
+  .SiteLogo {
+    @include M_flex_box(row, center); /* Elts en horizontal et centrés*/
+    align-items: center; /*centrer  les elts verticalement*/
+    padding: 0 40px; /* Espace horizontal ppur que la fleche soir décalée du bord*/
+
+    .SiteImg {
+      /* Le logo du site*/
+      @include M_AffichageLogo;
+    }
+  }
+}
+
+/*-----------------------------------------------------------------------------------*/
+
+/*Section de recherche avec son formulaire*/
+.Recherche {
+  /* la section recherche contient 2 elts le h6 caché et le bloc RechercheItem*/
+  @include M_flex_box(column, center); /* Elts en vertical et centrés*/
+
+  /*Taille*/
+  width: 100%; /*Affichage sur toute la largeur*/
+
+  background-color: $FondGrisFonce;
+
+  /* Bordure solid, grise  en haut du champ de recherche*/
+  border-top: $HauteurRechercheBordure solid $CouleurBordure; /* bordure en haut du champde recherche*/
+
+  margin: $TailleEspaceStandard auto 0 auto; /* haut | droit | bas | gauche */
+
+  /* 2 parties pour le champ de recherche
+    le logo
+    Le champ de saisie*/
+
+  .RechercheItem {
+    /* l'ensemble logo + champ de saisie*/
+    @include M_flex_box(row, center); /* Elts en horizontal et centrés*/
+    width: 100%; /*Affichage sur toute la largeur -> Permet de centrer l'ensemble*/
+    height: $HauteurRecherche; /*Hauteur forcée en pixels*/
+
+    .RechercheLogo {
+      display: flex; /* pour centrer le petit logo*/
+      padding: $TailleEspaceStandard;
+
+      margin-right: 2%; /* Séparation avec le champ de saisie*/
+    }
+
+    .RechercheChamp {
+      /*Champ de la recherche utilisateur*/
+
+      height: 100%;
+      margin-left: 2%; /* séparation avec le logo*/
+
+      background-color: $FondGrisFonce;
+      p {
+        /*Champ de la recherche utilisateur*/
+        height: 100%;
+
+        text-align: center;
+
+        margin: 0;
+      }
+
+      .saisie {
+        color: $CouleurTexte; /* couleur texte de saisie*/
+        background-color: $FondGrisFonce; /* fond du champ de saisie (sinon reste en blanc*/
+
+        height: 100%;
+
+        border: none; /* supprime la bordure du champ de saisie*/
+      }
+    } /*fin RechercheChamp*/
+  } /*Fin RechercheItem*/
+} /*fin .Recherche*/
+
+/*--------------------------------------------------------------------------*/
+
+/*Promesse*/
+.Promesse {
+  @include M_flex_box(column, center); /* Elts en vertical et centrés*/
+
+  background-color: $FondGris;
+
+  align-items: center; /* centré verticalement*/
+
+  width: 100%;
+
+  padding: $TailleEspaceStandard 0 $TailleEspaceStandard 0; /* Espace  haut et bas  haut | droit | bas | gauche */
+}
+
+/* Affichage du bouton*/
+
+.Bouton {
+  color: $CouleurTexteBouton; /* texte en blanc*/
+
+  height: $HauteurBouton; /* Hauteur forcée en pixels*/
+
+  /* Fond dégradé pour le bouton du haut vers le bas*/
+  background-image: linear-gradient(
+    to top,
+    $CouleurPrimaire,
+    $CouleurSecondaire
+  );
+
+  border: none; /* Pas de bordure*/
+  padding: 0 $TailleEspaceStandard 0 $TailleEspaceStandard; /* Espace gauche et droite sur le texte du bouton  haut | droit | bas | gauche */
+
+  border-radius: $RadiusRond; /* Coins arrondis*/
+
+  /* petite ombre*/
+  @include M_AffichageOmbre;
+
+  /* Transition pour faire grossir le bouton au survol*/
+
+  &:hover {
+    opacity: 0.4; /* eclaircit*/
+    /* Augmentation de l'ombre   */
+    box-shadow: 10px 10px 20px $CouleurLienSurvol; /* Décalage horizontal, décalage vertical, force du dégradé, couleur*/
+  }
+}
+
+/*--------------------------------------------------------------------------*/
+/* Liens articles (fonctionnement et Restaurants et menus*/
+
+.LienArticle a:link {
+  /* lien au repos*/
+  text-decoration: none; /*lien pas souligné*/
+  color: $CouleurLienRepos; /* couleur du lien au repos */
+}
+
+/*--------------------------------------------------------------------------*/
+/*fonctionnement*/
+
+.Fonctionnement {
+  /* ensemble Titre + liste de fonctionnement*/
+  @include M_flex_box(column, center); /* Elts en vertical et centrés*/
+  margin: $TailleEspaceStandard;
+
+  /* La liste des items de fonctionnement*/
+  .FonctListe {
+    @include M_flex_box(
+      column,
+      center
+    ); //* Les boutons les uns au dessus des autres*/
+
+    /* Les couleurs de fond de chaque item*/
+    /* .FondItem1_2 {
+      background-color: $FondGris;
+    }
+
+    .FondItem3 {
+      background-color: $CouleurFondItem3;
+    }*/
+
+    /* Ensemble  avec le numéro l'icone et la description*/
+    .FonctItem {
+      @include M_flex_box(row, center); /*horizontal*/
+      position: relative; /* Permet de positionner les elts à l'intérieur*/
+      height: $HauteurFonctItem; /*Hauteur forcée en pixels*/
+
+      background-color: $FondGris;
+
+      margin: 10px 0; /* Marge entre chaque bouton*/
+
+      border-radius: $RadiusCard; /* coins arrondis*/
+
+      /* Ajout d'une ombre*/
+      @include M_AffichageOmbre;
+
+      /* Le numéro*/
+      .FonctNum {
+        display: flex;
+
+        position: absolute;
+
+        /* Carré de la taille = moitié du container de côté qui dépasse de la moitié à gauche*/
+        left: -$HauteurFonctItem/4; /* dépasse à gauche de la moitié de l'icone =le quart du container*/
+        top: $HauteurFonctItem/4; /* position / haut*/
+
+        height: $HauteurFonctItem/2; /* Hauteur largeur fornée en px de la moitié de la hauteur du container*/
+
+        width: $HauteurFonctItem/2;
+
+        text-decoration: none; /*Pas de soulignement*/
+        color: $CouleurNumFt; /* texte en blanc*/
+
+        background-color: $CouleurPrimaire;
+
+        border-radius: $RadiusRond; /* Le numéro dans un rond*/
+        p {
+          /* Le numéro dans son rond*/
+
+          margin: auto; /* Permet de centrer le logo*/
+        }
+      }
+
+      /* Le petit icone du fonctionnement*/
+      .FonctIcone {
+        position: absolute;
+        left: 10%; /* Position / bord gauche*/
+        top: $PositionFonctElt; /*Position / bord sup*/
+        color: $CouleurTexte;
+
+        /* couleur de l'icone 1 et 2*/
+        /*.CouleurIconeItem12 {
+        color: $CouleurTexte;
+      }*/
+      }
+
+      /* couleur de l'icone 3*/
+      .FonctIcone--Item3 {
+        color: $CouleurPrimaire;
+      }
+
+      /* La Description*/
+      .FonctDesc {
+        position: absolute;
+        left: 30%; /*Position / bord gauche*/
+        top: $PositionFonctElt; /*Position / bord sup*/
+      }
+    } /* Fin FonctItem*/
+
+    .FonctItem--Item3 {
+      background-color: $CouleurFondItem3;
+    }
+  } /* fin FonctList*/
+} /* fin Fonctionnement*/
+
+/*---------------------------------------*/
+/* Liste des restaurants*/
+/*---------------------------------------*/
+
+/* ensemble Titre + liste des restaurants*/
+.Restaurants {
+  @include M_flex_box(column, center); /* vertical: Titre + liste*/
+  background-color: $CouleurFondRestaurants; /*sur fond blanc*/
+
+  /* Le Titre*/
+  .TitreRestaurants {
+    margin: $TailleEspaceStandard;
+    @include M_flex_box(row, space-between); /* horizontal: Titre + spinner*/
+    position: relative;
+  }
+
+  /*Liste des restaurants*/
+  .RestaurantsListe {
+    @include M_flex_box(
+      column,
+      center
+    ); /* vertical: les items les uns au dessous des autres*/
+    margin: $TailleEspaceStandard;
+
+    /* L'ensemble image + texte + coeur*/
+    .RestaurantItem {
+      @include M_flex_box(
+        column,
+        space-between
+      ); /* vertical: photo et en dessous la description*/
+      /* disposition  sur la largeur*/
+
+      background-color: $CouleurFondDescRestaurants; /*sur fond blanc*/
+
+      height: $HauteurRestaurantItem;
+
+      margin: $TailleEspaceStandard; /* marge entre chaque restau*/
+
+      /* On arrondit les angles*/
+      border-radius: $RadiusCard; /* Tous les angles arrondis*/
+
+      /* Ajout d'une ombre*/
+      @include M_AffichageOmbre;
+
+      /*L'image avec son popup*/
+      .PopupImg {
+        @include M_flex_box(row, center); /*horizontal*/
+        position: relative; /* Permet de placer les elts à l'interieur du container*/
+
+        height: $HauteurRestaurantImg;
+
+        /*L'image du restaurant*/
+        .RestaurantImg {
+          position: absolute; /* Fixe la position de l'elt*/
+
+          width: 100%; /* 100% du container*/
+          height: $HauteurRestaurantImg;
+
+          object-fit: cover; /* pour que l'image soit moins tordue*/
+
+          z-index: 1; /* Place le popup devant l'image*/
+
+          /* On arrondit les angles en haut*/
+          border-radius: $RadiusCard $RadiusCard 0 0; /* Top left / Top right / Bottom right / Bottom left*/
+        }
+
+        /* Le popup 'Nouveau"*/
+        .Popup {
+          position: absolute; /* Fixe la position de l'elt*/
+          top: $TailleEspaceStandard; /* Position par rapport au haut du container*/
+          left: 70%; /* Position par rapport à la gauche du container*/
+
+          height: $TailleEspaceStandard;
+          width: 20%;
+
+          z-index: 2; /* Place le popup devant l'image*/
+          color: $CouleurTextePopup;
+          background-color: $CouleurTertiaire;
+          padding: 5px;
+          p {
+            text-align: center;
+          }
+        }
+      }
+
+      .RestaurantDesc {
+        /* le nom , le lieu puis le petit icone coeur à côté*/
+        /* Horizontal et disposition avec des espaces entre chaque item et au bord*/
+        @include M_flex_box(row, space-around);
+        margin: $TailleEspaceStandard;
+
+        .RestaurantNom {
+          width: 70%; /* Occupe 70% de la largeur*/
+          padding-left: 0; /* petit décalage / bord*/
+        }
+        /* Le coeur*/
+      } /* fin RestautantDesc*/
+    } /* Fin restaurant Item*/
+
+    /* Les liens sur les items restaurant*/
+    /* Effets supplémentaires au survol   */
+    .RestaurantItem:hover {
+      /* Ajout d'une ombre  */
+      box-shadow: 5px 5px 5px $CouleurLienSurvol; /* Décalage horizontal, décalage vertical, force du dégradé, couleur*/
+    } /* */
+
+    /* Media query pour tablesttes et desktop:
+    Les items les uns à côté des autres*/
+    @media screen and (min-width: $TailleEcranDesktop) {
+      @include M_flex_box(
+        row,
+        space-around
+      ); /* horizontal: les items les uns à côté des autres*/
+
+      .RestaurantArticle {
+        flex-basis: 25%; /* Taille par defaut / container*/
+        box-sizing: border-box; /*  bordure et le remplissage dans la valeur définie pour la largeur et la hauteur*/
+
+        .RestaurantItem {
+          height: $HauteurRestaurantItemD;
+        }
+      } /* Fin RestaurantArticle*/
+    } /* Fin media query*/
+  } /* Fin Restaurant liste*/
+} /*Fin .REstaurant*/
+
+/*--------------------------------------------------*/
+/*Footer                                            */
+/*--------------------------------------------------*/
+
+footer {
+  /* Les liens*/
+
+  a:link {
+    text-decoration: none; /* pas souligné*/
+    color: $CouleurTexteFooter; /*texte de la couleur des copains*/
+  }
+
+  a:hover {
+    color: $CouleurTexteFooter; /*texte de la couleur des copains*/
+  }
+
+  a:visited {
+    color: $CouleurTexteFooter; /*texte de la couleur des copains*/
+  }
+
+  /* mis e en page*/
+  padding: $TailleEspaceStandard; /* ajout espace autout du padding*/
+  color: $CouleurTexteFooter; /*texte en blanc*/
+  background-color: $CouleurFooter; /*Sur fond noir*/
+  * {
+    padding: 1px; /* Espace entre chaque elt*/
+  }
+
+  h3 {
+    font-family: Shrikhand; /* Font family pour le logo*/
+  }
+
+  .PiedDePage {
+    /* Comprend l'icone et sa description*/
+    @include M_flex_box(row, flex-start);
+    align-items: center; /*centrer  les elts verticalement*/
+  }
+} /*Fin du footer*/
